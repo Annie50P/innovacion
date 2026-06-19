@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { toast } from 'sonner';
 import { Eye, EyeOff, Shield, TrendingUp, Globe } from 'lucide-react';
-import { tenantStorage, sessionStorage } from '@/lib/storage';
+import { tenantStorage, sessionStorage, profileStorage } from '@/lib/storage';
 import { Tenant, Session } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -31,6 +31,16 @@ type RegisterForm = z.infer<typeof registerSchema>;
 const COUNTRIES = ['Panamá','Estados Unidos','México','Colombia','Argentina','Chile','Perú','Brasil','España','Alemania','Francia','Reino Unido','Canadá','Costa Rica','Guatemala','El Salvador','Honduras','Nicaragua','República Dominicana','Venezuela','Ecuador','Bolivia','Uruguay','Paraguay','Otro'];
 const VOLUMES = ['< $5,000 / mes', '$5,000 – $20,000 / mes', '$20,000 – $100,000 / mes', '> $100,000 / mes'];
 const GATEWAYS = ['Stripe', 'PayPal', 'Wise', 'MercadoPago', 'Otro'];
+
+const PARTICLE_POSITIONS = [
+  { left: 12.51, top: 86.46 }, { left: 63.63, top: 23.18 }, { left: 75.33, top: 29.08 },
+  { left: 21.25, top: 19.94 }, { left: 44.87, top: 57.32 }, { left: 88.12, top: 41.65 },
+  { left: 33.74, top: 72.91 }, { left: 56.48, top: 8.37  }, { left: 7.93,  top: 64.52 },
+  { left: 91.06, top: 15.83 }, { left: 28.39, top: 48.76 }, { left: 68.21, top: 93.14 },
+  { left: 47.55, top: 35.60 }, { left: 15.82, top: 81.44 }, { left: 82.67, top: 52.29 },
+  { left: 39.11, top: 6.75  }, { left: 60.94, top: 77.83 }, { left: 3.27,  top: 31.58 },
+  { left: 73.45, top: 62.37 }, { left: 50.00, top: 44.21 },
+];
 
 export default function AuthPage() {
   const router = useRouter();
@@ -95,11 +105,17 @@ export default function AuthPage() {
     };
 
     tenantStorage.add(tenant);
+    profileStorage.set(tenantId, {
+      id: tenantId, name: data.name, email: data.email,
+      companyName: data.companyName, country: data.country,
+      monthlyVolume: data.monthlyVolume, gateways: selectedGateways,
+      plan: 'starter', createdAt: new Date().toISOString(),
+    });
 
     const session: Session = { tenantId, email: data.email, name: data.name, loginAt: new Date().toISOString() };
     sessionStorage.set(session);
     toast.success('¡Cuenta creada exitosamente!');
-    router.push('/dashboard');
+    router.push('/onboarding');
     setLoading(false);
   };
 
@@ -116,13 +132,11 @@ export default function AuthPage() {
         </svg>
 
         {/* Floating particles */}
-        {[...Array(20)].map((_, i) => (
+        {PARTICLE_POSITIONS.map((pos, i) => (
           <div
             key={i}
             className="absolute w-1 h-1 rounded-full"
-            style={{ background: 'var(--accent-gold)', left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
-            
-            
+            style={{ background: 'var(--accent-gold)', left: `${pos.left}%`, top: `${pos.top}%` }}
           />
         ))}
 

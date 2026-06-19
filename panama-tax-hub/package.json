@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
-    "@stripe/stripe-js": "^9.8.0",
-    "@types/uuid": "^10.0.0",
-    "framer-motion": "^12.40.0",
     "lucide-react": "^1.21.0",
     "next": "16.2.9",
     "react": "19.2.4",
@@ -29,6 +26,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "tailwindcss": "^4",

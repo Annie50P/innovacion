@@ -9,6 +9,7 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
   const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
   const [checked, setChecked] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
     const s = sessionStorage.get();
@@ -30,8 +31,21 @@ export default function PlatformLayout({ children }: { children: React.ReactNode
 
   return (
     <div className="flex min-h-screen" style={{ background: 'var(--bg-primary)' }}>
-      <Sidebar session={session} />
-      <main className="flex-1 overflow-auto" style={{ marginLeft: 240 }}>
+      <Sidebar
+        session={session}
+        isOpen={sidebarOpen}
+        onToggle={() => setSidebarOpen(o => !o)}
+        onClose={() => setSidebarOpen(false)}
+      />
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-20 lg:hidden"
+          style={{ background: 'rgba(0,0,0,0.5)' }}
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+      <main className="flex-1 overflow-auto lg:ml-60">
         {children}
       </main>
     </div>

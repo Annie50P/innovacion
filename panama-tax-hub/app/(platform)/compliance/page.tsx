@@ -94,7 +94,7 @@ export default function CompliancePage() {
       setReport(data.content);
       setShowReportModal(true);
     } catch {
-      toast.error('Error generando reporte. Verifica tu ANTHROPIC_API_KEY.');
+      toast.error('Error al generar reporte. Intenta de nuevo.');
     } finally {
       setGeneratingReport(false);
     }

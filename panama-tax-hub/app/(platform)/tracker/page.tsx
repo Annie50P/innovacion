@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 
 import { toast } from 'sonner';
+import Link from 'next/link';
 import { CheckCircle2, Clock, ChevronRight, FileText, User, Zap } from 'lucide-react';
 import { sessionStorage, trackerStorage, transactionStorage, classificationStorage } from '@/lib/storage';
 import { TrackerState, Session } from '@/types';
@@ -213,6 +214,25 @@ export default function TrackerPage() {
                   Guardar nota
                 </button>
               </div>
+
+              {/* Proposal CTA for states 5 and 6 */}
+              {(selected === 5 || selected === 6) && (
+                <div className="p-5 rounded-lg border" style={{ background: 'rgba(230,180,74,0.04)', borderColor: 'rgba(230,180,74,0.2)' }}>
+                  <p className="text-xs mb-3" style={{ color: 'var(--text-secondary)' }}>
+                    {selected === 5
+                      ? 'La revisión legal está lista. Presenta la propuesta comercial al cliente para su aprobación.'
+                      : 'El cliente aprobó la propuesta. Puedes consultarla en cualquier momento.'}
+                  </p>
+                  <Link
+                    href="/proposal"
+                    className="flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium transition-all"
+                    style={{ background: 'var(--accent-gold)', color: '#0A0F1E' }}
+                  >
+                    <FileText className="w-4 h-4" />
+                    {selected === 6 ? 'Ver propuesta aprobada' : 'Ver y firmar propuesta'}
+                  </Link>
+                </div>
+              )}
 
               {/* Advance button */}
               {selected === tracker.currentState && tracker.currentState < 14 && (

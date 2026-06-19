@@ -288,7 +288,7 @@ export default function SimulatorPage() {
                   <Tooltip
                     contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 8 }}
                     labelStyle={{ color: 'var(--text-secondary)' }}
-                    formatter={(v: number) => [`$${v.toLocaleString('en-US', { maximumFractionDigits: 0 })}`, '']}
+                    formatter={((v: number) => [`$${v.toLocaleString('en-US', { maximumFractionDigits: 0 })}`, '']) as any}
                   />
                   <Legend />
                   <Line type="monotone" dataKey="currentScenarioCumulative" stroke="var(--accent-red)" name="Situación Actual" strokeWidth={2} dot={false} />
@@ -306,7 +306,7 @@ export default function SimulatorPage() {
                     <Pie data={pieData} cx="50%" cy="50%" innerRadius={40} outerRadius={60} dataKey="value">
                       {pieData.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                     </Pie>
-                    <Tooltip formatter={(v: number) => formatCurrency(v)} contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 8 }} />
+                    <Tooltip formatter={((v: number) => formatCurrency(v)) as any} contentStyle={{ background: 'var(--bg-elevated)', border: '1px solid var(--border)', borderRadius: 8 }} />
                     <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 11, color: 'var(--text-muted)' }} />
                   </PieChart>
                 </ResponsiveContainer>

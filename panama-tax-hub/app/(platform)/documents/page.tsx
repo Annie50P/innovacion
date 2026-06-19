@@ -51,7 +51,7 @@ export default function DocumentsPage() {
       const data = await res.json();
       setGeneratedContent(data.content);
     } catch {
-      toast.error('Error al generar documento. Verifica tu ANTHROPIC_API_KEY.');
+      toast.error('Error al generar documento. Intenta de nuevo.');
     } finally {
       setGenerating(false);
     }
