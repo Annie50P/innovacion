@@ -108,7 +108,7 @@ export default function TransactionsPage() {
       toast.success('¡Clasificación completada con IA!');
       setTab('classify');
     } catch (err) {
-      toast.error('Error al clasificar. Verifica tu ANTHROPIC_API_KEY en .env.local');
+      toast.error('Error al clasificar transacciones. Intenta de nuevo.');
     } finally {
       setClassifying(false);
       setClassifyProgress(0);
@@ -378,8 +378,7 @@ export default function TransactionsPage() {
                       <div className="h-2 rounded-full overflow-hidden" style={{ background: 'var(--bg-elevated)' }}>
                         <div
                           className="h-full rounded-full"
-                          style={{ background: 'var(--accent-gold)' }}
-                          animate={{ width: `${classifyProgress}%` }}
+                          style={{ background: 'var(--accent-gold)', width: `${classifyProgress}%`, transition: 'width 0.4s ease' }}
                           
                         />
                       </div>

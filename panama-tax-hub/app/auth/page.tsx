@@ -7,7 +7,7 @@ import { z } from 'zod';
 
 import { toast } from 'sonner';
 import { Eye, EyeOff, Shield, TrendingUp, Globe } from 'lucide-react';
-import { tenantStorage, sessionStorage } from '@/lib/storage';
+import { tenantStorage, sessionStorage, profileStorage } from '@/lib/storage';
 import { Tenant, Session } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -95,6 +95,17 @@ export default function AuthPage() {
     };
 
     tenantStorage.add(tenant);
+    profileStorage.set(tenantId, {
+      id: tenantId,
+      name: data.name,
+      email: data.email,
+      companyName: data.companyName,
+      country: data.country,
+      monthlyVolume: data.monthlyVolume,
+      gateways: selectedGateways,
+      plan: 'starter',
+      createdAt: new Date().toISOString(),
+    });
 
     const session: Session = { tenantId, email: data.email, name: data.name, loginAt: new Date().toISOString() };
     sessionStorage.set(session);
